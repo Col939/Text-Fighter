@@ -41,7 +41,11 @@ def levelUp():
     global lvlNum
     global xpNeeded
     global fullHealth
-
+    global xpGained
+    
+    xpNeeded *= 1.5
+    xpGained = 0
+    
     print("\033c")
     print("Which stat would you like to increase?")
     x = input("a to increase attack, d to increase defense, s to increase speed, h to increase health \n")
@@ -62,6 +66,7 @@ def levelUp():
         print("Your health was set back to full and increased by " + str(lvlUpValue))
     time.sleep(3)
     print("\033c")
+    
 
 def battleSequence():
     global player
@@ -104,8 +109,8 @@ def battleSequence():
                 xpGained = random.randint(lvlNum, lvlNum * 100)
             print("You killed the enemy!")
             print("\nYou gained " + str(xpGained) + "xp")
-            xpNeeded -= xpGained
-            if xpNeeded <= 0:
+
+            if xpNeeded <= xpGained:
                 print("You leveled up!")
                 time.sleep(2)
                 levelUp()
@@ -146,5 +151,4 @@ def startRound():
     enemy = Enemy()
     battleSequence()
 startRound()
-
 
