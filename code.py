@@ -13,12 +13,12 @@ class Enemy:
 class Player:
     health = 100
     attPower = 1
-    dfc = 1
+    dfc = 50
     speed = 1
 
 turn = "p"
 
-moves = ["attack", "block"]
+moves = ["attack"]
 
 fullHealth = 100
 
@@ -34,6 +34,8 @@ xpGained = 0
 minLvlUp = 1
 maxLvlUp = 3
 
+block = False
+
 def levelUp():
     global player
     global lvlNum
@@ -48,7 +50,7 @@ def levelUp():
         player.attPower += lvlUpValue
         print("Your attack was increased by " + str(lvlUpValue))
     elif x == "d":
-        player.def += lvlUpValue
+        player.dfc += lvlUpValue
         print("Your defense was increased by " + str(lvlUpValue))
     elif x == "s":
         player.speed += lvlUpValue
@@ -56,7 +58,7 @@ def levelUp():
     elif x == "h":
         player.health = fullHealth
         player.health += lvlUpValue
-        fullHeath += lvlUpValue
+        fullHealth += lvlUpValue
         print("Your health was set back to full and increased by " + str(lvlUpValue))
     time.sleep(3)
     print("\033c")
@@ -69,7 +71,10 @@ def battleSequence():
     global roundNum
     global xpGained
     global xpNeeded
+    global block
 
+    block = False
+    
     if roundNum == 1:
         enemy.health = 1
         enemy.attPower = 1
@@ -84,6 +89,7 @@ def battleSequence():
 
         move = input("What do you do? \n" + "Type a to attack, b to block, or r to run \n")
         print("\033c")
+        
         if move == "a":
             enemy.health -= player.attPower
             turn = "e"
@@ -104,14 +110,30 @@ def battleSequence():
                 time.sleep(2)
                 levelUp()
             return
+        
+        elif move == "b":
+            c = random.randint(1, 100);
+            if c < player.dfc:
+                block = True
+            else:
+                block = False
+            turn = "e"
+            
+        
     if turn == "e":
         x = random.choice(moves)
         if x == "attack":
-            print("The enemy attacked you for " + str(enemy.attPower) + "\n")
-            player.health -= enemy.attPower
+            if block == False:
+                print("The enemy attacked you for " + str(enemy.attPower) + "\n")
+                player.health -= enemy.attPower
+                time.sleep(1.5)
+                print("Player Health: " + str(player.health) + "\n")
+            else:
+                print("The enemys attack was blocked")
             turn = "p"
             time.sleep(1.5)
-            print("Player Health: " + str(player.health) + "\n")
+            print("\033c")
+     
 
     
     battleSequence()
@@ -124,3 +146,5 @@ def startRound():
     enemy = Enemy()
     battleSequence()
 startRound()
+
+
