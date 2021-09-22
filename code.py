@@ -31,6 +31,8 @@ lvlNum = 1
 xpNeeded = 100
 xpGained = 0
 
+oldXpGained = 0
+
 minLvlUp = 1
 maxLvlUp = 3
 
@@ -45,6 +47,8 @@ def levelUp():
     
     xpNeeded *= 1.5
     xpGained = 0
+    lvlNum += 1
+    
     
     print("\033c")
     print("Which stat would you like to increase?")
@@ -61,11 +65,28 @@ def levelUp():
         print("Your speed was increased by " + str(lvlUpValue))
     elif x == "h":
         player.health = fullHealth
-        player.health += lvlUpValue
+        player.health += (lvlUpValue + 5)
         fullHealth += lvlUpValue
-        print("Your health was set back to full and increased by " + str(lvlUpValue))
+        print("Your health was set back to full and increased by " + str(lvlUpValue + 5))
     time.sleep(3)
     print("\033c")
+    
+def nextBattle():
+    global player
+    global enemy
+    global turn
+    global moveNum
+    global roundNum
+    global block
+    
+    enemy = Enemy()
+    if enemy.speed > player.speed:
+        turn = "e"
+    else:
+        turn = "p"
+    block = False
+    roundNum += 1
+    battleSequence()
     
 
 def battleSequence():
@@ -77,6 +98,7 @@ def battleSequence():
     global xpGained
     global xpNeeded
     global block
+    global oldXpGained
 
     block = False
     
@@ -106,14 +128,20 @@ def battleSequence():
             if roundNum == 1:
                 xpGained = 100
             else:
-                xpGained = random.randint(lvlNum, lvlNum * 100)
+                oldXpGained = xpGained
+                xpGained += random.randint(lvlNum, lvlNum * 100)
             print("You killed the enemy!")
-            print("\nYou gained " + str(xpGained) + "xp")
+            print("\nYou gained " + str(xpGained - oldXpGained) + "xp")
 
             if xpNeeded <= xpGained:
                 print("You leveled up!")
                 time.sleep(2)
                 levelUp()
+            else:
+                print(str(xpNeeded - xpGained) + " is needed to level up")
+                time.sleep(2)
+                print("\033c")
+            nextBattle()
             return
         
         elif move == "b":
@@ -151,4 +179,3 @@ def startRound():
     enemy = Enemy()
     battleSequence()
 startRound()
-
