@@ -22,7 +22,8 @@ turn = "p"
 moves = ["attack"]
 
 classes = ["Healer", "Warlock", "Mage"]
-cDescriptions = ["You heal hp every turn", "Your damage has a chance of being a critical strike", "Your mana recharges twice as fast"]
+classDescriptions = ["You heal hp every turn", "Your damage has a chance of being a critical strike", "Your mana recharges twice as fast"]
+selClass = ""
 
 manaMoves = ["Fireball", "Lightning Strike", "Wave of Pain"]
 manaCosts = [8, 12, 16]
@@ -48,6 +49,7 @@ minLvlUp = 1
 maxLvlUp = 3
 
 block = False
+
 
 def levelUp():
     global player
@@ -91,6 +93,18 @@ def levelUp():
         
     time.sleep(3)
     print("\033c")
+    if lvlNum == 5:
+        classAssign()
+    
+
+def classAssign():
+    print("\033c")
+    index = 0
+    for x in classes:
+        print(x + classDescriptions[index])
+        index += 1
+        
+
     
 def nextBattle():
     global player
@@ -172,21 +186,6 @@ def battleSequence():
             time.sleep(1.5)
             print("Enemy Health: " + str(enemy.health))
             
-    if turn == "e":
-        x = random.choice(moves)
-        if x == "attack":
-            if block == False:
-                print("The enemy attacked you for " + str(enemy.attPower) + "\n")
-                player.health -= enemy.attPower
-                time.sleep(1.5)
-                print("Player Health: " + str(player.health) + "\n")
-            else:
-                print("The enemys attack was blocked")
-            turn = "p"
-            time.sleep(1.5)
-            print("\033c")
-     
-    
     if enemy.health <= 0:
         if roundNum == 1:
             xpGained = 100
@@ -206,6 +205,27 @@ def battleSequence():
             print("\033c")
         nextBattle()
         return
+            
+    if turn == "e":
+        x = random.choice(moves)
+        if x == "attack":
+            if block == False:
+                print("The enemy attacked you for " + str(enemy.attPower) + "\n")
+                player.health -= enemy.attPower
+                time.sleep(1.5)
+                if player.health <= 0:
+                    print("Game Over")
+                    time.sleep(2)
+                    return False
+                else:    
+                    print("Player Health: " + str(player.health) + "\n")
+            else:
+                print("The enemys attack was blocked")
+            turn = "p"
+            time.sleep(1.5)
+            print("\033c")
+     
+    
     
     battleSequence()
 
