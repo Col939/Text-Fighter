@@ -20,6 +20,8 @@ turn = "p"
 
 moves = ["attack", "block"]
 
+fullHealth = 100
+
 moveNum = 1
 
 roundNum = 1
@@ -36,6 +38,7 @@ def levelUp():
     global player
     global lvlNum
     global xpNeeded
+    global fullHealth
 
     print("\033c")
     print("Which stat would you like to increase?")
@@ -44,6 +47,17 @@ def levelUp():
     if x == "a":
         player.attPower += lvlUpValue
         print("Your attack was increased by " + str(lvlUpValue))
+    elif x == "d":
+        player.def += lvlUpValue
+        print("Your defense was increased by " + str(lvlUpValue))
+    elif x == "s":
+        player.speed += lvlUpValue
+        print("Your speed was increased by " + str(lvlUpValue))
+    elif x == "h":
+        player.health = fullHealth
+        player.health += lvlUpValue
+        fullHeath += lvlUpValue
+        print("Your health was set back to full and increased by " + str(lvlUpValue))
     time.sleep(3)
     print("\033c")
 
