@@ -15,10 +15,14 @@ class Player:
     attPower = 1
     dfc = 50
     speed = 1
+    mana = 10
 
 turn = "p"
 
 moves = ["attack"]
+
+classes = ["Healer", "Warlock", "Mage"]
+cDescriptions = ["You heal hp every turn", "Your damage has a chance of being a critical strike", "Your mana recharges twice as fast"]
 
 fullHealth = 100
 
