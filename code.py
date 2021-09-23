@@ -2,6 +2,8 @@
 import random
 import time
 
+enemyTypes = ["Ground", "Flying", "Water"]
+
 class Enemy:
     health = random.randint(5, 20)
     if health > 10:
@@ -10,6 +12,7 @@ class Enemy:
         attPower = random.randint(5, 10)
     dfc = 1
     speed = random.randint(1, 5)    
+    eType = random.choice(enemyTypes)
 
 class Player:
     health = 100
@@ -22,14 +25,20 @@ turn = "p"
 
 moves = ["attack"]
 
-classes = ["Healer", "Warlock", "Mage"]
-classDescriptions = ["You heal hp every turn", "Your damage has a chance of being a critical strike", "Your mana recharges twice as fast"]
+classes = ["Healer", "Warlock", "Mage", "Trader"]
+classDescriptions = ["You heal hp every turn", "Your damage has a chance of being a critical strike", 
+"Your mana recharges twice as fast", "Shop prices are halved"]
 selClass = ""
 
 manaMoves = ["Fireball", "Lightning Strike", "Wave of Pain"]
 manaCosts = [8, 12, 16]
 manaMoveStrenth = [5, 10, 15]
 unlockedManaMoves = ["Fireball"]
+
+shopItems = ["Potion of Healing", "Potion of Leveling", "Potion of Mana"]
+shopItemDescriptions = ["Heals the player by 25 hp, tastes like cherries", "Grants the player the remaining xp to level up",
+"Recharges the players mana by 20 points"]
+shopItemCosts = [50, 600, 75]
 
 fullHealth = 100
 
@@ -116,6 +125,8 @@ def classAssign():
         selClass = "Warlock"
     elif i == "m":
         selClass = "Mage"
+    elif i == "t":
+        selClass = "Trader"
     time.sleep(.5)
     print("\033c")
     
@@ -187,12 +198,10 @@ def battleSequence():
         enemy.attPower = 1
         enemy.speed = 1
         enemy.dfc = 1
+        enemy.eType = enemyTypes[0]
         
 
     if turn == "p":
-
-        if moveNum == 1:
-            print(enemy.health)
 
         move = input("What do you do? \n" + "Type a to attack, b to block, m to use a magic attack, or r to run \nMana: " + str(player.mana) + "\n")
         
