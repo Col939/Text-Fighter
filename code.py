@@ -38,6 +38,9 @@ moveNum = 1
 
 roundNum = 1
 
+manaRechargeCount = 2
+healthRechargeCount = -1
+
 lvlNum = 1
 
 xpNeeded = 100
@@ -93,18 +96,46 @@ def levelUp():
         
     time.sleep(3)
     print("\033c")
-    if lvlNum == 5:
+    if lvlNum == 2:
         classAssign()
     
 
 def classAssign():
+    global selClass
     print("\033c")
     index = 0
     for x in classes:
-        print(x + classDescriptions[index])
+        print(x + "\n" + classDescriptions[index] + "\n")
         index += 1
-        
-
+    print("\nType the first letter of the class you want to select in LOWERCASE \nWarning: Your class CANNOT be changed unless you restart the game")
+    i = input("")
+    if i == "h":
+        selClass = "Healer"
+    elif i == "w":
+        selClass = "Warlock"
+    elif i == "m":
+        selClass = "Mage"
+    
+def recharge():
+    global manaRechargeCount
+    global healthRechargeCount
+    global player
+    
+    manaRechargeCount -= 1
+    if manaRechargeCount == 0:
+       if selClass == "Mage":
+         manaRechargeCount = 1
+       else:
+         manaRechargeCount = 2
+       if (player.mana + 1) < fullMana:
+          player.mana += 1
+       else:
+          print("Your mana is full")
+    if selClass == "Healer":
+        if (player.health + 2) < fullHealth:
+            player.health += 2
+          
+    
     
 def nextBattle():
     global player
@@ -225,7 +256,7 @@ def battleSequence():
             time.sleep(1.5)
             print("\033c")
      
-    
+    recharge()
     
     battleSequence()
 
