@@ -1,5 +1,3 @@
-
-   
 import random
 import time
 
@@ -13,7 +11,7 @@ class Enemy:
         attPower = random.randint(5, 10)
     dfc = 1
     speed = random.randint(1, 5)    
-    eType = random.choice(enemyTypes)
+    #eType = random.choice(enemyTypes)
 
 class Player:
     health = 100
@@ -178,6 +176,7 @@ def nextBattle():
         turn = "p"
     block = False
     roundNum += 1
+    moveNum = 1
     
     if roundNum % 5 == 0:
         shopOpen()
@@ -203,9 +202,14 @@ def battleSequence():
         enemy.attPower = 1
         enemy.speed = 1
         enemy.dfc = 1
-        enemy.eType = enemyTypes[0]
+        #enemy.eType = enemyTypes[0]
         
-
+    
+    if moveNum == 1:
+        print("You encountered an enemy!")
+        time.sleep(2)
+        print("\033c")
+    
     if turn == "p":
 
         move = input("What do you do? \n" + "Type a to attack, b to block, m to use a magic attack, or r to run \nMana: " + str(player.mana) + "\n")
@@ -230,7 +234,7 @@ def battleSequence():
             
         elif move == "m":
             print("\033c")
-            print("Type the first and last letter of the move to activate it")
+            print("Type the first and last letter of the move to activate it or type back to go back\n")
             index = 0
             for x in unlockedManaMoves:
                 print(x + "; Cost: " + str(manaCosts[index]))
@@ -238,9 +242,14 @@ def battleSequence():
             moveUsed = input("")
             
             if moveUsed == "fl":
+                print("\033c")
                 print("A blazing fireball struck the enemy")
                 enemy.health -= manaMoveStrenth[0]
                 player.mana -= manaCosts[0]
+            if moveUsed == "back":
+                print("\033c")
+                battleSequence()
+                return
                 
             turn = "e"
             time.sleep(1.5)
