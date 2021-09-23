@@ -1,8 +1,9 @@
+
    
 import random
 import time
 
-enemyTypes = ["Ground", "Flying", "Water"]
+#enemyTypes = ["Ground", "Flying", "Water"]
 
 class Enemy:
     health = random.randint(5, 20)
@@ -177,7 +178,11 @@ def nextBattle():
         turn = "p"
     block = False
     roundNum += 1
-    battleSequence()
+    
+    if roundNum % 5 == 0:
+        shopOpen()
+    else:  
+        battleSequence()
     
 
 def battleSequence():
@@ -233,6 +238,7 @@ def battleSequence():
             moveUsed = input("")
             
             if moveUsed == "fl":
+                print("A blazing fireball struck the enemy")
                 enemy.health -= manaMoveStrenth[0]
                 player.mana -= manaCosts[0]
                 
