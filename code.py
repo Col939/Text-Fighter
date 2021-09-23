@@ -1,3 +1,4 @@
+   
 import random
 import time
 
@@ -115,6 +116,9 @@ def classAssign():
         selClass = "Warlock"
     elif i == "m":
         selClass = "Mage"
+    time.sleep(.5)
+    print("\033c")
+    
     
 def recharge():
     global manaRechargeCount
@@ -127,14 +131,24 @@ def recharge():
          manaRechargeCount = 1
        else:
          manaRechargeCount = 2
-       if (player.mana + 1) < fullMana:
+       if (player.mana + 1) <= fullMana:
           player.mana += 1
+          print("The Mages Mark increased your mana by 1")
        else:
           print("Your mana is full")
     if selClass == "Healer":
+        
         if (player.health + 2) < fullHealth:
             player.health += 2
-          
+            print("The Healers Hat increased your health by 2")
+        elif (player.health + 1) == fullHealth:
+            player.health += 1
+            print("The Healers Hat increased your health by 1")
+            
+    print("Health: " + str(player.health))
+    print("Mana: " + str(player.mana))
+    time.sleep(2.5)
+    print("\033c")
     
     
 def nextBattle():
