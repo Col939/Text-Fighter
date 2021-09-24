@@ -75,8 +75,8 @@ def shopOpen():
     for x in shopItems:
         print("\n" + x + ": " + str(shopItemCosts[index]) + "g\n" + shopItemDescriptions[index])
         index += 1
-    input = input("")
-    if input == "healing" and player.gold >= shopItemCosts[0]:
+    i = input("")
+    if i == "healing" and player.gold >= shopItemCosts[0]:
         player.health += 25
         
 
@@ -121,7 +121,7 @@ def levelUp():
         player.mana += (lvlUpValue + 3)
         fullMana += (lvlUpValue + 5)
         
-    time.sleep(3)
+    time.sleep(2)
     print("\033c")
     if lvlNum == 2:
         classAssign()
@@ -175,7 +175,7 @@ def recharge():
             
     print("Health: " + str(player.health))
     print("Mana: " + str(player.mana))
-    time.sleep(2.5)
+    time.sleep(2)
     print("\033c")
     
     
@@ -227,7 +227,7 @@ def battleSequence():
         print("You encountered an enemy!")
         print("\nLevel: " + str(lvlNum))
         print("Round Number: " + str(roundNum))
-        time.sleep(2)
+        time.sleep(1.5)
         print("\033c")
     
     if turn == "p":
@@ -286,11 +286,11 @@ def battleSequence():
 
         if xpNeeded <= xpGained:
             print("You leveled up!")
-            time.sleep(2)
+            time.sleep(1.7)
             levelUp()
         else:
             print(str(xpNeeded - xpGained) + " is needed to level up")
-            time.sleep(2)
+            time.sleep(1.7)
             print("\033c")
         nextBattle()
         return
@@ -324,5 +324,6 @@ def startRound():
     global turn
     player = Player()
     enemy = Enemy()
+    print("\033c")
     battleSequence()
 startRound()
