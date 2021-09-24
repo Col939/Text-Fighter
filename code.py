@@ -19,6 +19,7 @@ class Player:
     dfc = 50
     speed = 1
     mana = 10
+    gold = 0
 
 turn = "p"
 
@@ -66,13 +67,18 @@ block = False
 
 def shopOpen():
     global shopOpenCount
+    global player
     shopOpenCount += 1
     print("\033c")
     index = 0
     print("Type the type of potion in LOWERCASE to buy, or type leave to leave the shop. Ex. typing healing will buy a Potion of Healing")
     for x in shopItems:
-        print("\n" + x + ": " + str(shopItemCosts[index]) + "\n" + shopItemDescriptions[index])
+        print("\n" + x + ": " + str(shopItemCosts[index]) + "g\n" + shopItemDescriptions[index])
         index += 1
+    input = input("")
+    if input == "healing" and player.gold >= shopItemCosts[0]:
+        player.health += 25
+        
 
 
 def levelUp():
