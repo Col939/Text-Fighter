@@ -57,10 +57,22 @@ xpGained = 0
 
 oldXpGained = 0
 
+shopOpenCount = 0
+
 minLvlUp = 1
 maxLvlUp = 3
 
 block = False
+
+def shopOpen():
+    global shopOpenCount
+    shopOpenCount += 1
+    print("\033c")
+    index = 0
+    print("Type the type of potion in LOWERCASE to buy, or type leave to leave the shop. Ex. typing healing will buy a Potion of Healing")
+    for x in shopItems:
+        print("\n" + x + ": " + str(shopItemCosts[index]) + "\n" + shopItemDescriptions[index])
+        index += 1
 
 
 def levelUp():
@@ -207,6 +219,8 @@ def battleSequence():
     
     if moveNum == 1:
         print("You encountered an enemy!")
+        print("\nLevel: " + str(lvlNum))
+        print("Round Number: " + str(roundNum))
         time.sleep(2)
         print("\033c")
     
