@@ -196,10 +196,10 @@ def nextBattle():
     roundNum += 1
     moveNum = 1
     
-    if roundNum % 5 == 0:
-        shopOpen()
-    else:  
-        battleSequence()
+    #if roundNum % 5 == 0:
+    #    shopOpen()
+   #else:  
+    battleSequence()
     
 
 def battleSequence():
@@ -262,10 +262,19 @@ def battleSequence():
             moveUsed = input("")
             
             if moveUsed == "fl":
-                print("\033c")
-                print("A blazing fireball struck the enemy")
-                enemy.health -= manaMoveStrenth[0]
-                player.mana -= manaCosts[0]
+                if player.mana >= manaCosts[0]:
+                    print("\033c")
+                    print("A blazing fireball struck the enemy")
+                    enemy.health -= manaMoveStrenth[0]
+                    player.mana -= manaCosts[0]
+                else:
+                    print("\033c")
+                    print("You dont have enough mana to use this move :(")
+                    time.sleep(1.5)
+                    print("\033c")
+                    battleSequence()
+                    return
+            
             if moveUsed == "back":
                 print("\033c")
                 battleSequence()
