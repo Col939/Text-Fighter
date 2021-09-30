@@ -77,19 +77,21 @@ if name == "Jakob":
 
     
 
-
 def shopOpen():
     global shopOpenCount
     global player
     shopOpenCount += 1
     print("\033c")
     index = 0
-    print("Type the type of potion in LOWERCASE to buy, or type leave to leave the shop. Ex. typing healing will buy a Potion of Healing")
+    print("Type the type of potion in LOWERCASE to buy, or type leave to leave the shop or type back to leave the shop. Ex. typing healing will buy a Potion of Healing")
     for x in shopItems:
         print("\n" + x + ": " + str(shopItemCosts[index]) + "g\n" + shopItemDescriptions[index])
         index += 1
     i = input("")
-    print("\033c");
+    print("\033c")
+    if i == "back":
+        print("\033c")
+        nextBattle()
     if i == "healing" and player.gold >= shopItemCosts[0]:
         if player.health + 25 > fullHealth:
             print("You gain " + str(fullHealth - player.health) + "hp");
@@ -317,7 +319,7 @@ def battleSequence():
             player.gold += goldGained
         print("You killed the enemy!")
         print("\nYou gained " + str(xpGained - oldXpGained) + "xp")
-        print("You found " + goldGained + " gold")
+        print("You found " + str(goldGained) + " gold")
         
 
         if xpNeeded <= xpGained:
