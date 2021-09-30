@@ -1,5 +1,6 @@
 import random
 import time
+import sys
 
 #enemyTypes = ["Ground", "Flying", "Water"]
 
@@ -59,11 +60,23 @@ xpGained = 0
 oldXpGained = 0
 
 shopOpenCount = 0
+goldGained = 0
 
 minLvlUp = 1
 maxLvlUp = 3
 
 block = False
+
+
+    
+    
+name = input("What is your name?\n");
+if name == "Jakob":
+    print("You died")
+    sys.exit()
+
+    
+
 
 def shopOpen():
     global shopOpenCount
@@ -76,9 +89,18 @@ def shopOpen():
         print("\n" + x + ": " + str(shopItemCosts[index]) + "g\n" + shopItemDescriptions[index])
         index += 1
     i = input("")
+    print("\033c");
     if i == "healing" and player.gold >= shopItemCosts[0]:
-        player.health += 25
-        
+        if player.health + 25 > fullHealth:
+            print("You gain " + str(fullHealth - player.health) + "hp");
+            player.health += fullHealth - player.health;
+        else:
+            player.health += 25;
+            print("You gained 25 hp")
+        print("Your mom left you at birth you waste of space")
+    time.sleep(5);
+    print("\033c");
+    nextBattle()
 
 
 def levelUp():
@@ -196,10 +218,10 @@ def nextBattle():
     roundNum += 1
     moveNum = 1
     
-    #if roundNum % 5 == 0:
-    #    shopOpen()
-   #else:  
-    battleSequence()
+    if roundNum % 2 == 0:
+        shopOpen()
+    else:  
+        battleSequence()
     
 
 def battleSequence():
@@ -287,11 +309,16 @@ def battleSequence():
     if enemy.health <= 0:
         if roundNum == 1:
             xpGained = 100
+            goldGained = 10
         else:
             oldXpGained = xpGained
             xpGained += random.randint(lvlNum, lvlNum * 100)
+            goldGained = random.randint(lvlNum, lvlNum * 50)
+            player.gold += goldGained
         print("You killed the enemy!")
         print("\nYou gained " + str(xpGained - oldXpGained) + "xp")
+        print("You found " + goldGained + " gold")
+        
 
         if xpNeeded <= xpGained:
             print("You leveled up!")
